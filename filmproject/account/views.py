@@ -3,6 +3,23 @@ from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.auth import login, logout, authenticate
 
+def check_password(password):
+    if len(password)>=8:
+        return True
+    return False
+
+def check_validation(password):
+    has_digit, has_alpha, has_symbols = False, False, False
+
+    for i in password:
+        if i.isdigit():
+            has_digit =  True
+        elif i.isalpha():
+            has_alpha = True
+        else:
+            has_symbols = True
+    return has_digit and has_alpha and has_symbols
+
 def signup(request):
     if request.method == "POST":
         """
@@ -16,9 +33,14 @@ def signup(request):
         password = request.POST.get("password")
         
         if not User.objects.filter(username=username).exists():
-            User.objects.create_user(
-            username = username,
-            password = password
+            if not check_password(password) :
+                messages.info(request, "Password must be at least 8 symbols")
+            elif not check_validation(password):
+                messages.info(request,"Password must contain both characters and numbers")
+            else:
+                User.objects.create_user(
+                username = username,
+                password = password
             )
         else :
             messages.info(request,"Username has been taken")
