@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from django.http import Http404
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.auth import login, logout, authenticate
@@ -71,5 +72,22 @@ def loginUser(request):
 def logoutUser(request):
     logout(request)
     return redirect("index")
+
+#------------------------------------------------------------------
+def changepassword(request):
+    if request.user.is_authenticated:
+        raise Http404
+    if request.method == "POST":
+        newpassword1 = request.POST.get("newpassword1")
+        newpassword2 = request.POST.get("newpassword2")
+
+        if newpassword1 == newpassword2:
+            request.user.set_password(newpassword1)
+            request.user.save()
+            messages.success(request, "Password changed")
+
+            return redirect("login")
+        
+    return render(request,'changepassword.html')
 
 
