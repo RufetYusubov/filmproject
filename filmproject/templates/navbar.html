@@ -21,7 +21,8 @@
               <li><a class="dropdown-item" href="#">{{ request.user.username }}</a></li>
               <li><a class="dropdown-item" href="{% url 'logout' %}">Logout</a></li>
               <li><hr class="dropdown-divider"></li>
-              <li><a class="dropdown-item" href="#">Something else here</a></li>
+              <li><a class="dropdown-item" href="{% url 'settings' %}">Settings</a></li>
+              <li><a class="dropdown-item" href="{% url 'messages' %}">Messages</a></li>
             </ul>
           </li>
           {% else %}

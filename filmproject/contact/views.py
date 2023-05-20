@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from contact.models import ContactModel
 from django.contrib import messages
+from django.http import Http404
 def contact(request):
     if request.method == "POST":
         name = request.POST.get('name')
@@ -19,3 +20,13 @@ def contact(request):
         messages.success(request, "Message sent")
 
     return render(request,'contact.html')
+
+def messagess(request):
+    if not request.user.is_staff:
+        raise Http404
+        
+    profile = ContactModel.objects.order_by("id")
+    context = {
+        "profiles" : profile
+    }
+    return render(request,'messages.html',context)

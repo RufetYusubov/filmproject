@@ -3,6 +3,7 @@ from django.http import Http404
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.auth import login, logout, authenticate
+from django.contrib.auth.hashers import check_password
 
 def check_password(password):
     if len(password)>=8:
@@ -78,16 +79,45 @@ def changepassword(request):
     if request.user.is_authenticated:
         raise Http404
     if request.method == "POST":
+        username = request.POST.get("username")
         newpassword1 = request.POST.get("newpassword1")
         newpassword2 = request.POST.get("newpassword2")
+        user = User.objects.get(username=username)
+
+        # print(username, newpassword1, newpassword2, user)
 
         if newpassword1 == newpassword2:
-            request.user.set_password(newpassword1)
-            request.user.save()
+            user.set_password(newpassword1)
+            user.save()
             messages.success(request, "Password changed")
 
-            return redirect("login")
+        return redirect("login")
         
     return render(request,'changepassword.html')
 
+def settings(request):
+    if not request.user.is_authenticated:
+        raise Http404
+    if request.method == "POST":
+        firstname = request.POST.get("firstname")
+        lastname = request.POST.get("lastname")
+        username = request.POST.get("username")
+        oldpassword = request.POST.get("oldpassword")
+        newpassword = request.POST.get("newpassword")
+        if firstname:
+            request.user.first_name = firstname
+            request.user.save()
+        if lastname:
+            request.user.last_name = lastname
+            request.user.save()
+        if username:
+            request.user.username = username
+            request.user.save()
+        if oldpassword and newpassword:
+            if check_password(oldpassword, request.user.password):
+                request.user.set_password(newpassword)
+                request.user.save()
+            
+    return render(request, 'settings.html')
+    
 
