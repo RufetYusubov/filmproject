@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 class FilmModel(models.Model):
     name = models.CharField(max_length=500)
@@ -31,3 +32,18 @@ class ActorModel(models.Model):
 
     def __str__(self):
         return self.name + " " + self.surname
+    
+
+class CommentModel(models.Model):
+    user = models.ForeignKey(User,on_delete = models.CASCADE, related_name="user_comments")
+    film = models.ForeignKey(FilmModel,on_delete=models.CASCADE,blank=True, null=True,related_name="film_comments")
+    actor = models.ForeignKey(ActorModel, on_delete=models.CASCADE,blank=True, null=True, related_name="actor_comments")
+
+    comment = models.TextField()
+    pub_date = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        verbose_name = "Comment"
+
+    def __str__(self):
+        return self.user.username + " " + self.id

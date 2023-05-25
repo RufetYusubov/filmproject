@@ -31,4 +31,28 @@
             Your browser does not support the video tag.
           </video>
       </div>
+      <div class="container my-3">
+        <form class="my-3" method="POST">
+          {% csrf_token %}
+          <input type="hidden" name = "film_id" value = "{{ film.id }}">       
+          <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label">Your comment</label>
+            <textarea class="form-control" name = "comment" id="exampleInputEmail1" aria-describedby="emailHelp"></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary">Send</button>
+        </form>
+        {% for comment in film.film_comments.all %}
+        <div class="card">
+          <div class="card-header">
+            {{ comment.user.username}}
+          </div>
+          <div class="card-body">
+            <blockquote class="blockquote mb-0">
+              <p>{{ comment.comment }}</p>
+              <footer class="blockquote-footer">{{ comment.pub_date }}</cite></footer>
+            </blockquote>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
  {% endblock %}
