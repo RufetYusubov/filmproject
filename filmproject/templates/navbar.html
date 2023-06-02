@@ -37,6 +37,16 @@
             </a>
           </li>
           {% endif %}
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle text-light" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Categories
+            </a>
+            <ul class="dropdown-menu">
+            {% for category in categories %}
+              <li><a class="dropdown-item" href="{% url 'categoryfilms' category.id %}">{{ category.name }}</a></li>
+            {% endfor %}
+            </ul>
+          </li>
         </ul>
         <form class="d-flex" role="search">
           <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">

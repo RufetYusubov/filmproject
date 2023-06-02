@@ -4,25 +4,31 @@ from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.hashers import check_password
+from film.models import Category
 
 def check_password(password):
     if len(password)>=8:
         return True
     return False
 
-def check_validation(password):
-    has_digit, has_alpha, has_symbols = False, False, False
+# def check_validation(password):
+#     has_digit, has_alpha, has_symbols = False, False, False
 
-    for i in password:
-        if i.isdigit():
-            has_digit =  True
-        elif i.isalpha():
-            has_alpha = True
-        else:
-            has_symbols = True
-    return has_digit and has_alpha and has_symbols
+#     for i in password:
+#         if i.isdigit():
+#             has_digit =  True
+#         elif i.isalpha():
+#             has_alpha = True
+#         else:
+#             has_symbols = True
+#     return has_digit and has_alpha and has_symbols
 
 def signup(request):
+    categories = Category.objects.all()
+    context = {
+        "categories" : categories
+    }
+
     if request.method == "POST":
         """
         request.POST = {
@@ -37,20 +43,24 @@ def signup(request):
         if not User.objects.filter(username=username).exists():
             if not check_password(password) :
                 messages.info(request, "Password must be at least 8 symbols")
-            elif not check_validation(password):
-                messages.info(request,"Password must contain both characters and numbers")
+            # elif not check_validation(password):
+            #     messages.info(request,"Password must contain both characters and numbers")
             else:
                 User.objects.create_user(
                 username = username,
                 password = password
             )
-        else :
+        else:
             messages.info(request,"Username has been taken")
-        return redirect("signup")
-    return render(request,'signup.html')
+        return redirect("login")
+    return render(request,'signup.html', context)
 #-------------------------------------------------------------
 
 def loginUser(request):
+    categories = Category.objects.all()
+    context = {
+        "categories" : categories
+    }
     if request.method == "POST":
         username = request.POST.get("username")
         password = request.POST.get("password")
@@ -67,7 +77,7 @@ def loginUser(request):
             else:
                 messages.info(request,"Please, enter correct password")
 
-    return render(request,'login.html')
+    return render(request,'login.html', context)
 #-------------------------------------------------------------------
 
 def logoutUser(request):
@@ -76,6 +86,10 @@ def logoutUser(request):
 
 #------------------------------------------------------------------
 def changepassword(request):
+    categories = Category.objects.all()
+    context = {
+        "categories" : categories
+    }
     if request.user.is_authenticated:
         raise Http404
     if request.method == "POST":
@@ -93,9 +107,13 @@ def changepassword(request):
 
         return redirect("login")
         
-    return render(request,'changepassword.html')
+    return render(request,'changepassword.html', context)
 
 def settings(request):
+    categories = Category.objects.all()
+    context = {
+        "categories" : categories
+    }
     if not request.user.is_authenticated:
         raise Http404
     if request.method == "POST":
@@ -118,6 +136,6 @@ def settings(request):
                 request.user.set_password(newpassword)
                 request.user.save()
             
-    return render(request, 'settings.html')
+    return render(request, 'settings.html', context)
     
 
