@@ -17,6 +17,7 @@ class FilmModel(models.Model):
 
     def __str__(self) :
         return self.name
+#----------------------------------------------------------
     
 class Category(models.Model):
     films = models.ManyToManyField(FilmModel,related_name="film_categories")
@@ -30,7 +31,7 @@ class Category(models.Model):
     def __str__(self) -> str:
         return self.name
     
-    
+#-----------------------------------------------------------------    
 class ActorModel(models.Model):
     name = models.CharField(max_length=100)
     surname = models.CharField(max_length=100)
@@ -46,7 +47,7 @@ class ActorModel(models.Model):
     def __str__(self):
         return self.name + " " + self.surname
     
-
+#---------------------------------------------------------------------------------------
 class CommentModel(models.Model):
     user = models.ForeignKey(User,on_delete = models.CASCADE, related_name="user_comments")
     film = models.ForeignKey(FilmModel,on_delete=models.CASCADE,blank=True, null=True,related_name="film_comments")
@@ -57,7 +58,7 @@ class CommentModel(models.Model):
 
     class Meta:
         verbose_name = "Comment"
-        ordering = ("-id",)
+        ordering = ("id",)
 
     def __str__(self):
         return self.user.username + " " + str(self.id)
@@ -72,3 +73,10 @@ class LikeModel(models.Model):
 
     def __str__(self):
         return self.user.username + " " + str(self.id)
+#----------------------------------------------------
+class FavouriteFilms(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="user_favouritefilms")
+    film = models.ForeignKey(FilmModel, on_delete=models.CASCADE, related_name="favourite_films")
+    
+    def __str__(self) :
+        return  self.user.username

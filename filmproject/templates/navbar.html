@@ -23,6 +23,7 @@
               <li><hr class="dropdown-divider"></li>
               <li><a class="dropdown-item" href="{% url 'settings' %}">Settings</a></li>
               <li><a class="dropdown-item" href="{% url 'messages' %}">Messages</a></li>
+              <li><a class="dropdown-item" href="{% url 'myfavouritefilms' %}">My Favourite</a></li>
             </ul>
           </li>
           {% else %}
@@ -49,7 +50,7 @@
           </li>
         </ul>
         <form class="d-flex" role="search">
-          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+          <input class="form-control me-2" name = "search" type="search" placeholder="Search" aria-label="Search">
           <button class="btn btn-outline-Light" type="submit">Search</button>
         </form>
       </div>

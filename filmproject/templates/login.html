@@ -16,15 +16,15 @@
               <label for="exampleInputPassword1" class="form-label">Password</label>
               <input type="password" name= "password" class="form-control" id="exampleInputPassword1">
             </div>
-            <button type="submit" class="btn btn-primary">Login</button><br>
+            <button type="submit" class="btn btn-primary">Login</button>
             <a href = "{% url 'changepassword' %}"> Forget Password</a>
-          </form>
-          {% if messages %}
-          <ul class="messages">
-          {% for message in messages %}
-            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-          {% endfor %}
-          </ul>
-          {% endif %}
+        </form>
+        {% if messages %}
+        <ul class="messages">
+        {% for message in messages %}
+          <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+        </ul>
+        {% endif %}
     </div>
 {% endblock %}

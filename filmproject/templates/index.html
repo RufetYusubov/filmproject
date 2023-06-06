@@ -17,9 +17,18 @@
                 <div class="card-footer">
                   <small class="text-body-secondary">Last updated {{ film.created_date | timesince }} ago</small>
                   <small class="text-body-secondary"><a class="btn btn-danger" href="{% url 'detail' film.id %}">more</a></small>
+                  {% if request.user.is_authenticated %}
+                  <form method="POST">
+                    {% csrf_token %}
+                    <input type = "hidden" name="film_id", value="{{film.id}}"> 
+                  <button type="submit" class="btn btn-secondary">My favourite</button>
+                  </form>
+                  {% endif %}
                 </div>
               </div>
             </div>
+            {% empty %}
+            <p>Not found</p>
           {% endfor %}
             <!-- <div class="col">
               <div class="card h-100">
