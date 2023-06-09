@@ -70,7 +70,7 @@ class IndexView(View):
 #     return render(request,'index.html', context)
 #-----------------------------------------------------------------
 class Categoryfilms(View):
-    def get(self,request,*args,**kwargs):
+    def get(self,request,id,*args,**kwargs):
         category = Category.objects.get(id=id)
         categories = Category.objects.all()
         context = {
@@ -226,26 +226,29 @@ class DetailView(View):
 
 #     return render(request, 'detail.html', context)
 #-----------------------------------------------------------
-def actors(request,id):
-    categories = Category.objects.all()
-    actor = ActorModel.objects.get(id=id)
-    user_comments = CommentModel.objects.filter(
-        user = request.user,
-    ) if request.user.is_authenticated else None
-    actor_comments = CommentModel.objects.filter(
-        actor = actor,
-        parent = None
-    )
+class ActorView(View):
+    def get(self,request,id,*args,**kwargs):
+        categories = Category.objects.all()
+        actor = ActorModel.objects.get(id=id)
+        actor_comments = CommentModel.objects.filter(
+            actor = actor,
+            parent = None
+        )
 
 
-    context = {
-        "actor" : actor,
-        "user_comments" : user_comments,
-        "actor_comments" : actor_comments,
-        "categories" : categories
-    }
-
-    if request.method == "POST":
+        context = {
+            "actor" : actor,
+            "actor_comments" : actor_comments,
+            "categories" : categories
+        }
+        if request.user.is_authenticated :
+            user_comments = CommentModel.objects.filter(
+                    user = request.user,
+                )
+            context["user_comments"] = user_comments
+        return render(request,'actors.html',context)
+    
+    def post(self,request,id,*args,**kwargs):
         choice = request.POST.get("choice")
         if choice == "comment":
             comment = request.POST.get("comment")
@@ -288,7 +291,70 @@ def actors(request,id):
             )
         return redirect("actors",id=id)
 
-    return render(request,'actors.html',context)
+
+# def actors(request,id):
+#     categories = Category.objects.all()
+#     actor = ActorModel.objects.get(id=id)
+#     user_comments = CommentModel.objects.filter(
+#         user = request.user,
+#     ) if request.user.is_authenticated else None
+#     actor_comments = CommentModel.objects.filter(
+#         actor = actor,
+#         parent = None
+#     )
+
+
+#     context = {
+#         "actor" : actor,
+#         "user_comments" : user_comments,
+#         "actor_comments" : actor_comments,
+#         "categories" : categories
+#     }
+
+#     if request.method == "POST":
+#         choice = request.POST.get("choice")
+#         if choice == "comment":
+#             comment = request.POST.get("comment")
+#             actor_id = request.POST.get("actor_id")
+
+#             actor = ActorModel.objects.get(id=actor_id)
+
+#             CommentModel.objects.create(
+#                 user = request.user,
+#                 actor = actor,
+#                 comment = comment
+#             )
+#         elif choice =="like":
+#             actor_id = request.POST.get("actor_id")
+#             actor = ActorModel.objects.get(id=actor_id)
+
+#             if not LikeModel.objects.filter( user = request.user, actor = actor).exists():
+#                 LikeModel.objects.create(
+#                     user = request.user,
+#                     actor = actor
+#                 )
+#             else :
+#                 like = LikeModel.objects.get(user=request.user, actor=actor)
+#                 like.delete()
+
+#         elif choice == "reply":
+#             actor_id = request.POST.get("actor_id")
+#             actor = ActorModel.objects.get(id=actor_id)
+
+#             comment_id = request.POST.get("comment_id")
+#             comment = CommentModel.objects.get(id=comment_id)
+
+#             reply = request.POST.get("reply")
+             
+#             CommentModel.objects.create(
+#                 user = request.user,
+#                 actor = actor,
+#                 comment = reply,
+#                 parent = comment
+#             )
+#         return redirect("actors",id=id)
+
+#     return render(request,'actors.html',context)
 #------------------------------------------------------------------
 def deleteComment(request,id):
     comment = CommentModel.objects.get(id=id)
@@ -300,24 +366,51 @@ def deleteactorComment(request,id):
     comment.delete()
     return redirect("actors", id=comment.actor.id)
 #------------------------------------------------------------------------------
-def favouritefilms(request):
-    if not request.user.is_authenticated:
-        raise Http404
-    user_comments = CommentModel.objects.filter(
-        user = request.user
-    )
-    user_likes = LikeModel.objects.filter(
-        user = request.user
-    )
-    favouritefilms = FavouriteFilms.objects.filter(
-        user = request.user
-    )
+class FavouriteFilm(View):
+    def get(self,request,*args,**kwargs):
+        if not request.user.is_authenticated:
+            raise Http404
+        categories = Category.objects.all()
+        favouritefilms = FavouriteFilms.objects.filter(
+            user = request.user
+        )
 
-    context = {
-        "favouritefilms" : favouritefilms,
-        "user_comments" : user_comments,
-        "user_likes" : user_likes
-    }
+        context = {
+            "favouritefilms" : favouritefilms,
+            "categories" : categories
+        }
+        user_comments = CommentModel.objects.filter(
+            user = request.user
+        )
+        user_likes = LikeModel.objects.filter(
+            user = request.user
+        )
+        context = {
+            "user_comments" : user_comments,
+            "user_likes" : user_likes
+        }
 
-    return render (request, 'favouritefilms.html',context)
+
+        return render (request, 'favouritefilms.html',context)
+
+# def favouritefilms(request):
+#     if not request.user.is_authenticated:
+#         raise Http404
+#     user_comments = CommentModel.objects.filter(
+#         user = request.user
+#     )
+#     user_likes = LikeModel.objects.filter(
+#         user = request.user
+#     )
+#     favouritefilms = FavouriteFilms.objects.filter(
+#         user = request.user
+#     )
+
+#     context = {
+#         "favouritefilms" : favouritefilms,
+#         "user_comments" : user_comments,
+#         "user_likes" : user_likes
+#     }
+
+#     return render (request, 'favouritefilms.html',context)
   

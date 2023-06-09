@@ -20,10 +20,12 @@
             <label for="exampleFormControlInput1">Surname</label>
             <input name="surname" type="text" class="form-control" id="exampleFormControlInput1" placeholder="Your surname...">
         </div>
+
         <div class="form-group">
           <label for="exampleFormControlInput1">Telephone</label>
           <input name="telephone" type="text" class="form-control" id="exampleFormControlInput1" placeholder="Your telephone...">
-      </div>
+        </div>
+
         <div class="form-group">
           <label for="exampleFormControlInput1">E-mail</label>
           <input name="email" type="email" class="form-control" id="exampleFormControlInput1" placeholder="Your email address...">
@@ -36,6 +38,7 @@
   
         <button type="submit" class="btn btn-secondary">Submit</button>
     </form>
-  </div>
+    {{ notification }}
+</div>
 {% endblock %}
 

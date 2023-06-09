@@ -44,7 +44,9 @@
           <button type = "submit" class="btn btn-primary">Like ({{ film.film_likes.all | length }})</button>
         </form>
       </div>
-      <div class="container my-3">
+
+
+  <div class="container my-3">
         {% if request.user.is_authenticated %}
         <form class="my-3" method="POST">
           {% csrf_token %}
@@ -59,7 +61,8 @@
         {% else %}
         <p><a href="{% url 'login' %}">Login</a>to write comment </p>
         {% endif %}
-        {% for comment in film_comments %}
+
+      {% for comment in film_comments %}
         <div class="card">
           <div class="card-header">
             {{ comment.user.username}}
@@ -73,6 +76,8 @@
               <footer class="blockquote-footer">{{ comment.pub_date }}</cite></footer>
             </blockquote>
           </div>
+        </div>
+
           {% if request.user.is_authenticated %}
           <form class="mx-5 my-3" method="POST">
             {% csrf_token %}
@@ -86,26 +91,26 @@
             <button type="submit" class="btn btn-primary">Reply</button>
           </form>
           {% else %}
-          <p><a href="{% url 'login' %}">Login</a>to write comment </p>
+          <p><a href="{% url 'login' %}">Login</a>to w
+            rite comment </p>
           {% endif %}
+          
           {% for reply in comment.replies.all %}
-        <div class="card my-3 mx-5">
-          <div class="card-header">
-            {{ reply.user.username}}
-            {% if reply in user_comments %}
-            <a href = "{% url 'delete_comment' reply.id %}" style = "float:right;">Delete</a>
-            {% endif %}
-          </div>
-          <div class="card-body">
-            <blockquote class="blockquote mb-0">
-              <p>{{ reply.comment }}</p>
-              <footer class="blockquote-footer">{{ reply.pub_date }}</cite></footer>
-            </blockquote>
-          </div>
-        </div>
+            <div class="card my-3 mx-5">
+              <div class="card-header">
+                {{ reply.user.username}}
+                {% if reply in user_comments %}
+                <a href = "{% url 'delete_comment' reply.id %}" style = "float:right;">Delete</a>
+                {% endif %}
+              </div>
+              <div class="card-body">
+                <blockquote class="blockquote mb-0">
+                  <p>{{ reply.comment }}</p>
+                  <footer class="blockquote-footer">{{ reply.pub_date }}</cite></footer>
+                </blockquote>
+              </div>
+            </div>
+          {% endfor %}
       {% endfor %}
-    {% endfor %}
-    </div>
-
-      </div>
- {% endblock %}
+  </div>
+{% endblock %}

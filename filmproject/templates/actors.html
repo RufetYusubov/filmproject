@@ -23,6 +23,7 @@
     <button type = "submit" class="btn btn-primary">Like ({{ actor.actor_likes.all | length }})</button>
   </form>
 </div>
+
 <div class="container my-3">
   {% if request.user.is_authenticated %}
   <form class="my-3" method="POST">
@@ -43,7 +44,7 @@
     <div class="card-header">
       {{ comment.user.username}}
       {% if comment in user_comments %}
-      <a href = "{% url 'delete_comment' comment.id %}" style = "float:right;">Delete</a>
+      <a href = "{% url 'delete_actor_comment' comment.id %}" style = "float:right;">Delete</a>
       {% endif %}
     </div>
     <div class="card-body">
@@ -52,6 +53,8 @@
         <footer class="blockquote-footer">{{ comment.pub_date }}</cite></footer>
       </blockquote>
     </div>
+
+    
     {% if request.user.is_authenticated %}
     <form class="mx-5 my-3" method="POST">
       {% csrf_token %}
@@ -72,7 +75,7 @@
     <div class="card-header">
       {{ reply.user.username}}
       {% if reply in user_comments %}
-      <a href = "{% url 'delete_comment' reply.id %}" style = "float:right;">Delete</a>
+      <a href = "{% url 'delete_actor_comment' reply.id %}" style = "float:right;">Delete</a>
       {% endif %}
     </div>
     <div class="card-body">
