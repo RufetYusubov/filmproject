@@ -17,7 +17,7 @@
                   {% for category in film.film_categories.all %}
                   <small class="text-body-secondary"><a class="btn-primary" href="{% url 'categoryfilms' category.id %}" style = "text-decoration: none;">{{ category.name }}</a></small>
                   {% endfor %}
-                </p>
+                </div>
                   <p class="card-text"><small class="text-body-secondary">Last updated{{ film.pub_date | timesince}}</small></p>
                   <p class="card-text">
                     {% for actor in film.actors.all %}
@@ -27,7 +27,7 @@
                 </div>
               </div>
             </div>
-        </div  class="container">
+        <div  class="container mt-3">
           <video controls>
             <source src="{{ film.video.url }}" type="video/mp4">
             <source src="{{ film.video.url }}" type="video/ogg">
@@ -37,12 +37,17 @@
 
       
       <div class = "container">
+        {% if request.user.is_authenticated %} 
         <form method="POST">
           {% csrf_token %}
           <input type = "hidden" name = "choice" value="like">
           <input type = "hidden" name = "film_id" value = "{{ film.id }}">
           <button type = "submit" class="btn btn-primary">Like ({{ film.film_likes.all | length }})</button>
         </form>
+        {% else %}
+        <a class="btn btn-primary" href="{% url 'login' %}">Like({{ film.film_likes.all | length}})</a>
+        {% endif %}
+        <span class="btn btn-primary" style="cursor: auto;">Views {{ film.views_count }}</span>
       </div>
 
 
@@ -59,7 +64,7 @@
           <button type="submit" class="btn btn-primary">Send</button>
         </form>
         {% else %}
-        <p><a href="{% url 'login' %}">Login</a>to write comment </p>
+        <p><a href="{% url 'login' %}">Login</a> to write comment </p>
         {% endif %}
 
       {% for comment in film_comments %}
@@ -90,9 +95,6 @@
             </div>
             <button type="submit" class="btn btn-primary">Reply</button>
           </form>
-          {% else %}
-          <p><a href="{% url 'login' %}">Login</a>to w
-            rite comment </p>
           {% endif %}
           
           {% for reply in comment.replies.all %}

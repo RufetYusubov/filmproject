@@ -385,10 +385,8 @@ class FavouriteFilm(View):
         user_likes = LikeModel.objects.filter(
             user = request.user
         )
-        context = {
-            "user_comments" : user_comments,
-            "user_likes" : user_likes
-        }
+        context["user_comments"] = user_comments
+        context["user_likes"] = user_likes
 
 
         return render (request, 'favouritefilms.html',context)
@@ -413,4 +411,9 @@ class FavouriteFilm(View):
 #     }
 
 #     return render (request, 'favouritefilms.html',context)
+#---------------------------------------------------------------------------------
+def DeleteFavouriteFilms(request,id):
+    favouritefilm = FavouriteFilms.objects.get(id=id)
+    favouritefilm.delete()
+    return redirect("myfavouritefilms")
   
