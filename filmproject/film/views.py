@@ -25,7 +25,7 @@ class IndexView(View):
         "categories" : categories
         # "isprime": isprime(28)    
     }
-        return render(request,"index.html",context)
+        return render(request,"home.html",context)
     
     def post(self,request,*args,**kwargs):
         if request.user.is_authenticated:
@@ -36,7 +36,7 @@ class IndexView(View):
                     film = film
                     
                 )
-        return redirect("index")
+        return redirect("home")
 #-----------------------------------------------------
         
 # def index(request):
