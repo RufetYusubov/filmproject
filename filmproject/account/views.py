@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.auth import login, logout, authenticate
 from film.models import Category
-from django.views import View
+from django.views.generic import View
 
 def check_password(password):
     if len(password)>=8:

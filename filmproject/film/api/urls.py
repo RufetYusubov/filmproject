@@ -10,7 +10,7 @@ urlpatterns = [
     path('film-retrieve-update-delete/<int:pk>/',views.FilmRetrieveUpdateDestroyAPIView.as_view(),name="film-retrieve-update-delete"),
 
     path('actors/',views.ActorListApiView.as_view(),name="actors"),
-    path('actor/<int:pk>/',views.ActorRetrieveApiView.as_view(), name="actor"),
+    path('actor-retrieve/<int:pk>/',views.ActorRetrieveApiView.as_view(), name="actor"),
     path('actor-create/',views.ActorCreateApi.as_view(),name="actor-create"),
     path('actor-update/<int:pk>/',views.ActorUpdateApiView.as_view(),name="actor-update"),
     path('actor-delete/<int:pk>/',views.ActorDestroyApiView.as_view(),name="actor-delete"),

@@ -21,7 +21,7 @@
                   <p class="card-text"><small class="text-body-secondary">Last updated{{ film.pub_date | timesince}}</small></p>
                   <p class="card-text">
                     {% for actor in film.actors.all %}
-                    <small class="text-body-secondary"><a class="btn-primary" href="{% url 'actors' actor.id %}" style = "text-decoration: none;">{{ actor.name }} {{actor.surname}}</a></small>
+                    <small class="text-body-secondary"><a class="btn-primary" href="{% url 'actor' actor.id %}" style = "text-decoration: none;">{{ actor.name }} {{actor.surname}}</a></small>
                     {% endfor %}
                   </p>
                 </div>

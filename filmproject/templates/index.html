@@ -16,7 +16,7 @@
                 </div>
                 <div class="card-footer">
                   <small class="text-body-secondary">Last updated {{ film.created_date | timesince }} ago</small>
-                  <small class="text-body-secondary"><a class="btn btn-danger" href="{% url 'detail' film.id %}">more</a></small>
+                  <small class="text-body-secondary"><a class="btn btn-danger" href="{% url 'details' film.id %}">more</a></small>
                   {% if request.user.is_authenticated %}
                   <form method="POST">
                     {% csrf_token %}

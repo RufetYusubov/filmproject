@@ -77,6 +77,10 @@ class LikeModel(models.Model):
 class FavouriteFilms(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="user_favouritefilms")
     film = models.ForeignKey(FilmModel, on_delete=models.CASCADE, related_name="favourite_films")
+
+    class Meta:
+        verbose_name = "favourite film"
+
     
     def __str__(self) :
         return  self.user.username
