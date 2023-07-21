@@ -59,9 +59,9 @@ class MessagesView(View):
         if not request.user.is_staff:
             raise Http404
         categories = Category.objects.all()
-        profile = ContactModel.objects.order_by("-id")
+        messages = ContactModel.objects.order_by("-id")
         context = {
-            "profiles" : profile,
+            "messages" : messages,
             "categories" : categories
         }
         return render(request,'messages.html',context)

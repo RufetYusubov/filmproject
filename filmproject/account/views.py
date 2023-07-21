@@ -23,19 +23,6 @@ def check_validation(password):
             has_symbols = True
     return has_digit and has_alpha and has_symbols
 
-# def capital_letter(password):
-#     capital_letter = ""
-#     for i in password:
-#         if i.isalpha():
-#             capital_letter+=i
-#     a = 0
-#     for i in capital_letter:
-#         if i.isupper():
-#             a+=1
-#     if a>0 and a<2:
-#         return True
-#     return False
-
 class SignupView(View):
     def get(self,request,*args,**kwargs):
         categories = Category.objects.all()

@@ -5,14 +5,14 @@
 {% endblock %}
 {% block content %}
 <div class = "container mt-3">
-  {% for profile in profiles %}
+  {% for message in messages %}
   <div class="card" style="width: 20rem;">
     <div class="card-body">
-      <h3 class="card-title">{{profile.name}}</h3>
-      <h4 class="card-subtitle mb-2 text-body-secondary">{{profile.surname}}</h4>
-      <h5 class="card-subtitle mb-2 text-body-secondary">{{profile.telephone}}</h5>
-      <h6 class="card-subtitle mb-2 text-body-secondary">{{profile.email}}</h6>
-      <h6 class="card-subtitle mb-2 text-body-secondary">{{profile.message}}</h6>
+      <h3 class="card-title">{{ message.name }}</h3>
+      <h4 class="card-subtitle mb-2 text-body-secondary">{{ message.surname }}</h4>
+      <h5 class="card-subtitle mb-2 text-body-secondary">{{ message.telephone }}</h5>
+      <h6 class="card-subtitle mb-2 text-body-secondary">{{ message.email}}</h6>
+      <h6 class="card-subtitle mb-2 text-body-secondary">{{ message.message}}</h6>
     </div>
   </div>
   {% endfor %}

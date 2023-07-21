@@ -45,7 +45,7 @@
           <button type = "submit" class="btn btn-primary">Like ({{ film.film_likes.all | length }})</button>
         </form>
         {% else %}
-        <a class="btn btn-primary" href="{% url 'login' %}">Like({{ film.film_likes.all | length}})</a>
+        <a class="btn btn-primary" href="{% url 'login' %}"></a>
         {% endif %}
         <span class="btn btn-primary" style="cursor: auto;">Views {{ film.views_count }}</span>
       </div>
