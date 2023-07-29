@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 class FilmModel(models.Model):
     name = models.CharField(max_length=500)
     rating = models.FloatField(default = 0)
-    pub_date = models.DateTimeField(blank=True, null=True)
+    pub_date = models.DateField(blank=True, null=True)
     created_date = models.DateTimeField(auto_now_add=True)
     poster = models.ImageField(upload_to = 'porters/')
     video = models.FileField(upload_to = 'videos/')

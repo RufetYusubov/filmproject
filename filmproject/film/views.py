@@ -20,6 +20,8 @@ class IndexView(View):
             films = FilmModel.objects.filter(
                 name__contains = search
             ).order_by("-id")
+
+            
         context = {
         "films" : films,
         "categories" : categories
