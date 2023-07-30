@@ -6,6 +6,8 @@ class FilmModel(models.Model):
     rating = models.FloatField(default = 0)
     pub_date = models.DateField(blank=True, null=True)
     created_date = models.DateTimeField(auto_now_add=True)
+    production_country = models.CharField(max_length=300,blank=True,null=True)
+    movie_duration = models.CharField(max_length=300,blank=True,null=True)
     poster = models.ImageField(upload_to = 'porters/')
     video = models.FileField(upload_to = 'videos/')
     views_count = models.IntegerField(default=0)
@@ -35,6 +37,7 @@ class Category(models.Model):
 class ActorModel(models.Model):
     name = models.CharField(max_length=100)
     surname = models.CharField(max_length=100)
+    photo = models.ImageField(upload_to='actors_photos',blank=True,null=True)
     birth_date = models.DateField(blank=True, null=True)
     birth_country = models.CharField(max_length=100,blank=True, null=True)
     about = models.TextField(blank=True,null=True)

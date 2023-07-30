@@ -12,23 +12,25 @@ def check_password(password):
     return False
 
 def check_validation(password):
-    has_digit, has_alpha, has_symbols = False, False, False
+    has_digit, has_upper_case, has_lower_case, has_symbols = False, False, False, False
 
     for i in password:
         if i.isdigit():
             has_digit =  True
-        elif i.isalpha():
-            has_alpha = True
+        elif i.isalpha() and i.isupper():
+            has_upper_case = True
+        elif i.isalpha() and i.islower():
+            has_lower_case = True
         else:
             has_symbols = True
-    return has_digit and has_alpha and has_symbols
+    return has_digit and has_upper_case and has_lower_case and has_symbols
 
 class SignupView(View):
     def get(self,request,*args,**kwargs):
         categories = Category.objects.all()
         context = {
             "categories" : categories
-        }
+        }       
         return render(request,'signup.html', context)
     
     def post(self,request,*args,**kwargs):
@@ -40,62 +42,21 @@ class SignupView(View):
                 messages.info(request, "Password must be at least 8 symbols")
                 return redirect('signup')
             elif not check_validation(password):
-                messages.info(request,"Password must contain both characters and numbers")
+                messages.info(request,"Password must contain both symbols(letters and others) and numbers")
                 return redirect('signup')
             else:
                 User.objects.create_user(
                 username = username,
                 password = password
             )
-            user = authenticate(request, username=username, password=password)
-            if user is not None:
-                login(request, user)
-                messages.success(request, "You logged in.")
+            # user = authenticate(request, username=username, password=password)
+            # if user is not None:
+            #     login(request, user)
+            #     messages.success(request, "You logged in.")
                 return redirect("index")
         else:
             messages.info(request,"Username has been taken")
             return redirect("signup")
-
-
-
-# def signup(request):
-#     categories = Category.objects.all()
-#     context = {
-#         "categories" : categories
-#     }
-
-#     if request.method == "POST":
-#         """
-#         request.POST = {
-#         "username" : "rufetyusubov",
-#         "password" = "rufet123
-#         }
-        
-#         """
-#         username = request.POST.get("username")
-#         password = request.POST.get("password")
-        
-#         if not User.objects.filter(username=username).exists():
-#             if not check_password(password) :
-#                 messages.info(request, "Password must be at least 8 symbols")
-#                 return redirect('signup')
-#             elif not check_validation(password):
-#                 messages.info(request,"Password must contain both characters and numbers")
-#                 return redirect('signup')
-#             else:
-#                 User.objects.create_user(
-#                 username = username,
-#                 password = password
-#             )
-#             user = authenticate(request, username=username, password=password)
-#             if user is not None:
-#                 login(request, user)
-#                 messages.success(request, "You logged in.")
-#                 return redirect("index")
-#         else:
-#             messages.info(request,"Username has been taken")
-#             return redirect("signup")
-#     return render(request,'signup.html', context)
 #-------------------------------------------------------------
 class LoginUserView(View):
     def get(self,request,*args,**kwargs):

@@ -9,7 +9,7 @@ class Filmserializer(serializers.ModelSerializer):
 class FilmCreateserializer(serializers.ModelSerializer):
         class Meta:
             model = FilmModel
-            exclude = ("views_count",)
+            exclude = ("views_count","rating")
 #-----------------------------------------------------------------------------------
 
 class Actorserializer(serializers.ModelSerializer):

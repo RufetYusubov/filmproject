@@ -3,6 +3,7 @@ from film.models import FilmModel, ActorModel,CommentModel,LikeModel,Category, F
 from django.http import Http404
 from django.contrib.auth.models import User
 from django.views.generic import View
+from django.db.models import Count
 # def isprime(n):
 #     for i in range(2,n//2):
 #         if n%i==0:
@@ -12,7 +13,9 @@ from django.views.generic import View
 class IndexView(View):
     def get(self,request,*args,**kwargs):
         films = FilmModel.objects.order_by("-id")
+        film_ratings = FilmModel.objects.order_by("rating")
         categories = Category.objects.all()
+        film_comments = CommentModel.objects.annotate(count = Count("comment")).order_by("-count")
 
     
         search = request.GET.get("search")
@@ -24,7 +27,9 @@ class IndexView(View):
             
         context = {
         "films" : films,
-        "categories" : categories
+        "categories" : categories,
+        "film_ratings" : film_ratings,
+        "film_comments" : film_comments
         # "isprime": isprime(28)    
     }
         return render(request,"home.html",context)

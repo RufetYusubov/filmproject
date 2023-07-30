@@ -4,83 +4,24 @@ HOME
 {% endblock %} 
 
 {% block content %} 
-<div id="sub-navigation">
-  <ul>
-    <li><a href="#">SHOW ALL</a></li>
-    <li><a href="#">LATEST TRAILERS</a></li>
-    <li><a href="#">TOP RATED</a></li>
-    <li><a href="#">MOST COMMENTED</a></li>
-  </ul>
-  <div id="search">
-    <form action="#" method="get" accept-charset="utf-8">
-      <label for="search-field">SEARCH</label>
-      <input type="text" name="search field" value="Enter search here" id="search-field" class="blink search-field"  />
-      <input type="submit" value="GO!" class="search-button" />
-    </form>
-  </div>
-</div>
-</div>
 <div id="main">
 <div id="content">
   <div class="box">
     <div class="head">
-      <h2>LATEST TRAILERS</h2>
+      <h2>LATEST FILMS</h2>
       <p class="text-right"><a href="#">See all</a></p>
     </div>
+    {% for film in films %}
     <div class="movie">
-      <div class="movie-image"> <span class="play"><span class="name">X-MAN</span></span> <a href="#"><img src="css/images/movie1.jpg" alt="" /></a> </div>
+      <div class="movie-image"> <span class="play"><span class="name">{{ film.name }}</span></span> <a href="#"><img src="{{ film.poster.url }}" alt="" /></a> </div>
       <div class="rating">
-        <p>RATING</p>
+        <p>{{ film.name }}</p>
         <div class="stars">
           <div class="stars-in"> </div>
         </div>
-        <span class="comments">12</span> </div>
+        <span class="comments">Rating {{ film.rating }}</span></div>
     </div>
-    <div class="movie">
-      <div class="movie-image"> <span class="play"><span class="name">SPIDER MAN 2</span></span> <a href="#"><img src="css/images/movie2.jpg" alt="" /></a> </div>
-      <div class="rating">
-        <p>RATING</p>
-        <div class="stars">
-          <div class="stars-in"> </div>
-        </div>
-        <span class="comments">12</span> </div>
-    </div>
-    <div class="movie">
-      <div class="movie-image"> <span class="play"><span class="name">SPIDER MAN 3</span></span> <a href="#"><img src="css/images/movie3.jpg" alt="" /></a> </div>
-      <div class="rating">
-        <p>RATING</p>
-        <div class="stars">
-          <div class="stars-in"> </div>
-        </div>
-        <span class="comments">12</span> </div>
-    </div>
-    <div class="movie">
-      <div class="movie-image"> <span class="play"><span class="name">VALKYRIE</span></span> <a href="#"><img src="css/images/movie4.jpg" alt="" /></a> </div>
-      <div class="rating">
-        <p>RATING</p>
-        <div class="stars">
-          <div class="stars-in"> </div>
-        </div>
-        <span class="comments">12</span> </div>
-    </div>
-    <div class="movie">
-      <div class="movie-image"> <span class="play"><span class="name">GLADIATOR</span></span> <a href="#"><img src="css/images/movie5.jpg" alt="" /></a> </div>
-      <div class="rating">
-        <p>RATING</p>
-        <div class="stars">
-          <div class="stars-in"> </div>
-        </div>
-        <span class="comments">12</span> </div>
-    </div>
-    <div class="movie last">
-      <div class="movie-image"> <span class="play"><span class="name">ICE AGE</span></span> <a href="#"><img src="css/images/movie6.jpg" alt="" /></a> </div>
-      <div class="rating">
-        <p>RATING</p>
-        <div class="stars">
-          <div class="stars-in"> </div>
-        </div>
-        <span class="comments">12</span> </div>
-    </div>
+   {% endfor %}
     <div class="cl">&nbsp;</div>
   </div>
   <div class="box">
