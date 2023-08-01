@@ -1,7 +1,6 @@
 from django.shortcuts import render,redirect
 from film.models import FilmModel, ActorModel,CommentModel,LikeModel,Category, FavouriteFilms
 from django.http import Http404
-from django.contrib.auth.models import User
 from django.views.generic import View
 from django.db.models import Count
 # def isprime(n):
@@ -44,37 +43,6 @@ class IndexView(View):
                     
                 )
         return redirect("home")
-#-----------------------------------------------------
-        
-# def index(request):
-#     films = FilmModel.objects.order_by("-id")
-#     categories = Category.objects.all()
-
-    
-#     search = request.GET.get("search")
-#     if search:
-#         films = FilmModel.objects.filter(
-#             name__contains = search
-#         ).order_by("-id")
-
-
-#     if request.user.is_authenticated:
-#         if request.method == "POST":
-#             film_id = request.POST.get("film_id")
-#             film = FilmModel.objects.get(id=film_id)
-#             favouritefilm = FavouriteFilms.objects.create(
-#                 user = request.user,
-#                 film = film
-                
-#             )
-    
-    
-#     context = {
-#         "films" : films,
-#         "categories" : categories
-#         # "isprime": isprime(28)    
-#     }
-#     return render(request,'index.html', context)
 #-----------------------------------------------------------------
 class Categoryfilms(View):
     def get(self,request,id,*args,**kwargs):
@@ -86,16 +54,6 @@ class Categoryfilms(View):
 
         }
         return render (request,'categoryfilms.html',context)
-
-# def categoryfilms(request,id):
-#     category = Category.objects.get(id=id)
-#     categories = Category.objects.all()
-#     context = {
-#         "category" : category,
-#         "categories" : categories
-
-#     }
-#     return render (request,'categoryfilms.html',context)
 #---------------------------------------------------------------
 class DetailView(View):
     def get(self,request,id,*args,**kwargs):
