@@ -1,8 +1,8 @@
 from django.urls import path
 from film import views
 urlpatterns = [
-    path('index/', views.IndexView.as_view(), name='home'),
-    path('details/<int:id>/', views.DetailView.as_view(), name="details"),
+    path('index/', views.IndexView.as_view(), name='index'),
+    path('details/<int:id>/', views.DetailView.as_view(), name="detail"),
     path('actor/<int:id>/',views.ActorView.as_view(),name="actor"),
     path('delete/<int:id>/' ,views.deleteComment,name="delete_comment"),
     path('deleteactor/<int:id>/' ,views.deleteactorComment,name="delete_actor_comment"),

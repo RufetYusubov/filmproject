@@ -49,10 +49,10 @@ class SignupView(View):
                 username = username,
                 password = password
             )
-            # user = authenticate(request, username=username, password=password)
-            # if user is not None:
-            #     login(request, user)
-            #     messages.success(request, "You logged in.")
+            user = authenticate(request, username=username, password=password)
+            if user is not None:
+                login(request, user)
+                messages.success(request, "You logged in.")
                 return redirect("index")
         else:
             messages.info(request,"Username has been taken")

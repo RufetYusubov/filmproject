@@ -12,9 +12,9 @@ from django.db.models import Count
 class IndexView(View):
     def get(self,request,*args,**kwargs):
         films = FilmModel.objects.order_by("-id")
-        film_ratings = FilmModel.objects.order_by("rating")
+        # film_ratings = FilmModel.objects.order_by("rating")
         categories = Category.objects.all()
-        film_comments = CommentModel.objects.annotate(count = Count("comment")).order_by("-count")
+        # film_comments = CommentModel.objects.annotate(count = Count("comment")).order_by("-count")
 
     
         search = request.GET.get("search")
@@ -27,11 +27,11 @@ class IndexView(View):
         context = {
         "films" : films,
         "categories" : categories,
-        "film_ratings" : film_ratings,
-        "film_comments" : film_comments
+        # "film_ratings" : film_ratings,
+        # "film_comments" : film_comments
         # "isprime": isprime(28)    
     }
-        return render(request,"home.html",context)
+        return render(request,"index.html",context)
     
     def post(self,request,*args,**kwargs):
         if request.user.is_authenticated:
@@ -42,7 +42,7 @@ class IndexView(View):
                     film = film
                     
                 )
-        return redirect("home")
+        return redirect("index")
 #-----------------------------------------------------------------
 class Categoryfilms(View):
     def get(self,request,id,*args,**kwargs):

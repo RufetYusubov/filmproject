@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% block title %}
-<title>{{ film.name }}</title>
+{{ film.name }}
 {% endblock %}
 
 {% block content %}
@@ -18,7 +18,7 @@
                   <small class="text-body-secondary"><a class="btn-primary" href="{% url 'categoryfilms' category.id %}" style = "text-decoration: none;">{{ category.name }}</a></small>
                   {% endfor %}
                 </div>
-                  <p class="card-text"><small class="text-body-secondary">Last updated{{ film.pub_date | timesince}}</small></p>
+                  <small class="text-body-secondary">Last updated {{ film.created_date | timesince}}</small>
                   <p class="card-text">
                     {% for actor in film.actors.all %}
                     <small class="text-body-secondary"><a class="btn-primary" href="{% url 'actor' actor.id %}" style = "text-decoration: none;">{{ actor.name }} {{actor.surname}}</a></small>
